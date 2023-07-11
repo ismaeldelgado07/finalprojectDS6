@@ -34,7 +34,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="400dp"
-            android:layout_height="450dp"
+            android:layout_height="460dp"
             android:layout_gravity="center"
             app:cardCornerRadius="70dp">
 
@@ -65,17 +65,12 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_background"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/textfield_background"
                     android:ems="10"
                     android:hint="Nombre y apellido"
                     android:inputType="text"
                     android:padding="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingBottom="15dp"
                     android:textColorHint="@color/design_default_color_secondary_variant" />
 
                 <EditText
@@ -83,17 +78,12 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_background"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/textfield_background"
                     android:ems="10"
                     android:hint="Nombre de usuario"
                     android:inputType="text"
                     android:padding="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingBottom="15dp"
                     android:textColorHint="@color/design_default_color_secondary_variant" />
 
                 <EditText
@@ -101,17 +91,12 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_background"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/textfield_background"
                     android:ems="10"
                     android:hint="Correo electrónico"
                     android:inputType="text"
                     android:padding="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingBottom="15dp"
                     android:textColorHint="@color/design_default_color_secondary_variant" />
 
                 <EditText
@@ -119,17 +104,12 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_background"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/textfield_background"
                     android:ems="10"
                     android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:padding="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingBottom="15dp"
                     android:textColorHint="@color/design_default_color_secondary_variant" />
 
                 <EditText
@@ -137,7 +117,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/textfield_background"
                     android:ems="10"
                     android:hint="Confirma tu contraseña"
                     android:inputType="textPassword"
@@ -155,10 +135,10 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@drawable/textfield_background"
                     android:padding="15dp"
-                    android:background="@drawable/button_background"
-                    android:visibility="invisible"
-                    android:textColorHint="@color/design_default_color_secondary_variant" />
+                    android:textColorHint="@color/design_default_color_secondary_variant"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:id="@+id/imageView2090"

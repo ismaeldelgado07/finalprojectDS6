@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.login_layout);
 
         editTextUsername = findViewById(R.id.et_username);
         editTextPass = findViewById(R.id.et_password);
@@ -91,6 +89,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        TextView btn_olvido_contrasena= (TextView) findViewById(R.id.tw_forgot_password);
+        //Se realiza la acción de escuchar cuando el boton es clickeado
+        btn_olvido_contrasena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Cuando se hace click, se llamada este metodo
+
+                recoverPassword();
+
+            }
+        });
+
+
+
+
     }
 
     public void iniciarSesion(){
@@ -102,6 +115,14 @@ public class LoginActivity extends AppCompatActivity {
         Intent i = new Intent (this, Register.class);
         startActivity(i);
     }
+
+    public void recoverPassword(){
+        Intent i = new Intent (this, Maintenance.class);
+        startActivity(i);
+    }
+
+
+
 
 }
 
