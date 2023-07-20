@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //Declaramos esta variable de tipo booleano enviándole los textos para ejecutar el método "Validar", en la
                 // clase DataBaseHelper, lo que hace es validar que efectivamente se hayan registrado esos datos a la base de datos y devolver un true or false
-                boolean iniciarSesionExitoso = databaseHelper.Validar(username, contrasena);
+                boolean iniciarSesionExitoso = databaseHelper.validar(username, contrasena);
 
                 if (iniciarSesionExitoso) {
                     iniciarSesion();

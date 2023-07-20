@@ -22,8 +22,6 @@ public class ShowDatabaseQuestions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.db_logs_layout);
 
-        String tipodb = getIntent().getStringExtra("tipodb");
-
         textViewInformacion = findViewById(R.id.tw_database_log);
         buttonVolver = findViewById(R.id.btn_volver);
 
@@ -31,19 +29,23 @@ public class ShowDatabaseQuestions extends AppCompatActivity {
         //Crea una objeto en el que se cargará la información que se vaya obteniendo de la base de datos según la consulta hecha
         StringBuilder stringBuilder = new StringBuilder();
         //Aquí creamos un objeto Cursor para cargar la información obtenida de la base de datos
-        Cursor cursor = databaseHelper.VerDatosPreguntasYRespuestas();
+        Cursor cursor = databaseHelper.verPreguntas();
 
         if (cursor.getCount() == 0) {
             stringBuilder.append("No hay información registrada.");
         } else {
             while (cursor.moveToNext()) {
                 //Extrae la información obtenida en la consulta y la va cargando en orden en objetos de tipo cadena/texto
-                String pregunta = cursor.getString(0);
-                String respuestacorrecta = cursor.getString(1);
+                String question  = cursor.getString(0);
+                String question_id  = cursor.getString(1);
+                String subject  = cursor.getString(2);
+
 
                 //Arma una cadena con la información cargada en las variables anteriores, y hace un espaciado para el siguiente párrafo
-                stringBuilder.append("pregunta: ").append(pregunta).append("\n");
-                stringBuilder.append("respuesta correcta: ").append(respuestacorrecta).append("\n");
+                stringBuilder.append("question: ").append(question).append("\n");
+                stringBuilder.append("question_id: ").append(question_id).append("\n");
+                stringBuilder.append("subject: ").append(subject).append("\n");
+
             }
         }
         //Carga la información del objeto StringBuilder en el TextView para que sea mostrado en la pantalla

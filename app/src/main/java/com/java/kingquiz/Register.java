@@ -44,7 +44,7 @@ public class Register extends AppCompatActivity {
                 String contrasena = editTextPass.getText().toString();
                 //Envía los datos ingresados en los edittext y devuelve un booleano
                 //Devuelve true si se cargaron los datos correctamente, y false en caso contrario
-                boolean guardadoExitoso = databaseHelper.RegistrarUsuarios(username, nombre, correo, contrasena);
+                boolean guardadoExitoso = databaseHelper.registrarUsuarios(username, nombre, correo, contrasena);
                 if (guardadoExitoso) {
                     Toast.makeText(Register.this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
                     finish(); // Regresa al MainActivity
