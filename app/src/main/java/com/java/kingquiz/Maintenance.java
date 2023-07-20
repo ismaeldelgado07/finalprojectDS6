@@ -12,78 +12,72 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.java.kingquiz.database.DatabaseHelper;
 
-public class Maintenance  extends AppCompatActivity {
-
-
-    private EditText editTextPregunta;
-    private EditText editTextRespuesta;
-    private Button buttonRegistrarPregunta;
-    // private Button buttonVolver;
-
-    private DatabaseHelper databaseHelper;
+public class Maintenance extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintenance_layout);
 
-        editTextPregunta = findViewById(R.id.et_agregar_pregunta);
-        editTextRespuesta = findViewById(R.id.et_agregar_respuesta);
-
-        buttonRegistrarPregunta = findViewById(R.id.btn_agregar_pregunta);
-        // buttonVolver = findViewById(R.id.buttonVolver);
-
-        databaseHelper = new DatabaseHelper(this);
-
-        buttonRegistrarPregunta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String pregunta = editTextPregunta.getText().toString();
-                String respuesta = editTextRespuesta.getText().toString();
-
-                //Envía los datos ingresados en los edittext y devuelve un booleano
-                //Devuelve true si se cargaron los datos correctamente, y false en caso contrario
-                boolean guardadoExitoso = databaseHelper.RegistrarPreguntasCorrectas(pregunta, respuesta);
-                if (guardadoExitoso) {
-                    Toast.makeText(Maintenance.this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
-                    finish(); // Regresa al MainActivity
-                } else {
-                    Toast.makeText(Maintenance.this, "No se ha podido guardar correctamente", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        TextView btn_show_me_login= (TextView) findViewById(R.id.btn_db_login);
+        TextView btn_show_me_login= findViewById(R.id.btn_db_login);
         //Se realiza la acción de escuchar cuando el boton es clickeado
         btn_show_me_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Cuando se hace click, se llamada este metodo
-                showMeDBLogin("login");
+                showMeDBLogin();
             }
         });
 
-        TextView btn_show_me_questions= (TextView) findViewById(R.id.btn_preguntas);
+        TextView btn_show_me_questions= findViewById(R.id.btn_preguntas);
         //Se realiza la acción de escuchar cuando el boton es clickeado
         btn_show_me_questions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Cuando se hace click, se llamada este metodo
-                showMeDBQuestions("questions");
+                showMeDBQuestions();
             }
         });
 
+        TextView btn_showAnswers= findViewById(R.id.btn_ver_respuestas);
+        //Se realiza la acción de escuchar cuando el boton es clickeado
+        btn_showAnswers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Cuando se hace click, se llamada este metodo
+                showMeDBAnswers();
+            }
+        });
+
+        TextView btn_add_data= findViewById(R.id.btn_agregar_data);
+        //Se realiza la acción de escuchar cuando el boton es clickeado
+        btn_add_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Cuando se hace click, se llamada este metodo
+                takeMeToAddData();
+            }
+        });
     }
 
-    public void showMeDBLogin(String db){
+    public void showMeDBLogin(){
         Intent i = new Intent (this, ShowDatabaseLogin.class);
-        i.putExtra("tipodb", db);
         startActivity(i);
     }
 
-    public void showMeDBQuestions(String db){
+    public void showMeDBQuestions(){
         Intent i = new Intent (this, ShowDatabaseQuestions.class);
-        i.putExtra("tipodb", db);
         startActivity(i);
     }
+
+    public void showMeDBAnswers(){
+        Intent i = new Intent (this, ShowDatabaseAnswers.class);
+        startActivity(i);
+    }
+
+    public void takeMeToAddData(){
+        Intent i = new Intent (this, AddData.class);
+        startActivity(i);
+    }
+
 }

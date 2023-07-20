@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agregar Preguntas" />
+
+        <EditText
+            android:id="@+id/et_agregar_pregunta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Pregunta"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_subject_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tema de pregunta"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_questionid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Agregar QuestionID"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btn_agregar_pregunta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agregar pregunta" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agregar respuestas" />
+
+        <EditText
+            android:id="@+id/et_agregar_respuesta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Respuesta"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/tw_answerid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ID respuesta"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_iscorrect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Es correcta?"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/tw_subject_answers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tema de respuesta"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btn_agregar_respuesta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agregar respuesta" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
