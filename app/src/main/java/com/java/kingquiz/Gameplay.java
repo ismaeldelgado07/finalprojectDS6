@@ -1,5 +1,6 @@
 package com.java.kingquiz;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,15 +16,19 @@ import com.java.kingquiz.database.DatabaseHelper;
 public class Gameplay extends AppCompatActivity {
 
     public TextView tw_pregunta;
+    public TextView tw_counterSlides;
     public Button btn_opcion1;
     public Button btn_opcion2;
     public Button btn_opcion3;
     public Button btn_opcion4;
 
+    public Button btn_nextQuestion;
+
     private DatabaseHelper databaseHelper;
 
     public int counter;
     TextView tw_timer;
+    int clickcount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +39,13 @@ public class Gameplay extends AppCompatActivity {
         startCountDown(tw_timer);
 
         tw_pregunta = findViewById(R.id.tw_question);
+        tw_counterSlides = findViewById(R.id.tw_countSlides);
 
         btn_opcion1 = findViewById(R.id.btn_opcion1);
         btn_opcion2 = findViewById(R.id.btn_opcion2);
         btn_opcion3= findViewById(R.id.btn_opcion3);
         btn_opcion4 = findViewById(R.id.btn_opcion4);
+        btn_nextQuestion = findViewById(R.id.btn_nextQuestion);
 
        // buttonVolver = findViewById(R.id.btn_volver);
 
@@ -46,9 +53,39 @@ public class Gameplay extends AppCompatActivity {
         //Crea una objeto en el que se cargará la información que se vaya obteniendo de la base de datos según la consulta hecha
         StringBuilder stringBuilder = new StringBuilder();
         //Aquí creamos un objeto Cursor para cargar la información obtenida de la base de datos
-        Cursor cursorQuestion = databaseHelper.bringMeQuestion();
 
-       if (cursorQuestion.getCount() == 0) {
+        playGame();
+
+        btn_nextQuestion.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                playGame();
+                btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
+                btn_opcion2.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
+                btn_opcion3.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
+                btn_opcion4.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
+                clickcount=clickcount+1;
+                if(clickcount==15)
+                {
+                    showMeResults();
+                }
+                else
+                {
+                    tw_counterSlides.setText(clickcount+"/15");
+                }
+
+            }
+        });
+
+    }
+
+    public void playGame(){
+        Cursor cursorQuestion = databaseHelper.bringMeQuestion();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (cursorQuestion.getCount() == 0) {
             stringBuilder.append("No hay información registrada.");
         } else {
             while (cursorQuestion.moveToNext()) {
@@ -95,7 +132,6 @@ public class Gameplay extends AppCompatActivity {
                     //Extrae la información obtenida en la consulta y la va cargando en orden en objetos de tipo cadena/texto
                     String iscorrect = cursorQuestion.getString(0);
 
-
                     //Arma una cadena con la información cargada en las variables anteriores, y hace un espaciado para el siguiente párrafo
                     stringBuilder.append(iscorrect);
                 }
@@ -107,7 +143,6 @@ public class Gameplay extends AppCompatActivity {
         catch(Exception e) {
             e.printStackTrace(System.out);
         }
-
 
     }
 
@@ -133,8 +168,6 @@ public class Gameplay extends AppCompatActivity {
     }
 
     public void showIfAnswerIsCorrect (String id){
-
-
         btn_opcion1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +179,7 @@ public class Gameplay extends AppCompatActivity {
                     btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
                 }else{
                     btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_dark_default_color_error));
+
                 }
             }
         });
@@ -186,6 +220,11 @@ public class Gameplay extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void showMeResults(){
+        Intent i = new Intent (this, ShowResults.class);
+        startActivity(i);
     }
 
 }
