@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -46,18 +47,6 @@ public class Gameplay extends AppCompatActivity {
         StringBuilder stringBuilder = new StringBuilder();
         //Aquí creamos un objeto Cursor para cargar la información obtenida de la base de datos
         Cursor cursorQuestion = databaseHelper.bringMeQuestion();
-        /**cursorQuestion.moveToFirst();
-        String pregunta = cursorQuestion.getString(1);
-        stringBuilder.append("¿ ").append(pregunta).append(" ?");
-        String pregunta_id = cursorQuestion.getString(1);
-        tw_pregunta.setText(stringBuilder.toString());
-
-        StringBuilder stringBuilderAnswer = new StringBuilder();
-        Cursor cursorAnswer = databaseHelper.bringMeCorrectAnswer(pregunta_id.toString());
-        cursorAnswer.moveToFirst();
-        String respuesta = cursorAnswer.getString(0);
-        stringBuilderAnswer.append("").append(respuesta).append("");
-        btn_opcion1.setText(stringBuilderAnswer.toString());**/
 
        if (cursorQuestion.getCount() == 0) {
             stringBuilder.append("No hay información registrada.");
@@ -72,6 +61,7 @@ public class Gameplay extends AppCompatActivity {
 
                 showMeCorrectAnswer(questionid);
                 showMeWrongOptions(questionid);
+                showIfAnswerIsCorrect(questionid);
             }
         }
         //Carga la información del objeto StringBuilder en el TextView para que sea mostrado en la pantalla
@@ -142,13 +132,17 @@ public class Gameplay extends AppCompatActivity {
 
     }
 
-    public void showIfAnswerIsCorrect (){
+    public void showIfAnswerIsCorrect (String id){
+
+
         btn_opcion1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String respuestaElegida = btn_opcion1.getText().toString();
+                boolean esCorrecta = databaseHelper.validateAnswer(id);
                 //Cuando se hace click, se llamada este metodo
-
-                if(btn_opcion1.getText().toString().contains("No hay informacion registrada.")){
+                if(esCorrecta){
+                    Toast.makeText(Gameplay.this,"Es correcta!" , Toast.LENGTH_LONG).show();
                     btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
                 }else{
                     btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_dark_default_color_error));

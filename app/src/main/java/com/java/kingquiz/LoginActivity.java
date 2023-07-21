@@ -40,8 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,roles);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);**/
 
-
-
         Button btn_login = (Button) findViewById(R.id.btn_login);
         //Se realiza la acción de escuchar cuando el boton es clickeado
         btn_login.setOnClickListener(new View.OnClickListener() {
