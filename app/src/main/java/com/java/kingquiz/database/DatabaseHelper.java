@@ -189,14 +189,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor bringMeWrongAnswers(String id) {
         SQLiteDatabase db = this.getReadableDatabase(); //Esto crea una una versión de sólo lectura de la base de datos para ver la información en ella
-        String query = "SELECT answer FROM " + TABLE_NAME3 +" WHERE isCorrect = 'false' AND answer_id = ' "+id+" 'ORDER BY RANDOM() LIMIT 3; "; //Consulta para ver toda la información ingresada en la tabla
+        String query = "SELECT answer FROM " + TABLE_NAME3 +" WHERE isCorrect = 'false' AND answer_id = '"+id+"' ORDER BY RANDOM() LIMIT 3; "; //Consulta para ver toda la información ingresada en la tabla
         return db.rawQuery(query, null); //Ejecuta la consulta
     }
 
-    public Cursor validateAnswer() {
-        SQLiteDatabase db = this.getReadableDatabase(); //Esto crea una una versión de sólo lectura de la base de datos para ver la información en ella
-        String query = "SELECT answer FROM " + TABLE_NAME3 +" WHERE isCorrect = 'false' ORDER BY RANDOM() LIMIT 3; "; //Consulta para ver toda la información ingresada en la tabla
-        return db.rawQuery(query, null); //Ejecuta la consulta
+    public boolean validateAnswer(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();             //Esto crea una una versión para sobreescribible de la base de datos para escribir información en ella
+        String query = "SELECT isCorrect FROM " + TABLE_NAME3 + " WHERE " +
+                COL_ANSWER_ID + " = '" + id + "' AND isCorrect ='true'";
+        //Esta consulta busca en toda la base de datos la fila
+        // donde los datos coincidan con la información con los que son enviados al método desde la clase que hace el llamado
+        Cursor cursor = db.rawQuery(query, null); //Este es un método que ejecuta la consulta (el query) y almacena el resultado en la variable Cursor
+        //este valor será un número entero que indicará la posición o número de la fila para que luego este pueda ser usado en el método "ObtenerNombre"
+        int count = cursor.getCount();
+        cursor.close();
+        return count > 0;
     }
 
 }
