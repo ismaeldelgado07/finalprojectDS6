@@ -98,10 +98,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
     }
 
     public void iniciarSesion(){
@@ -118,9 +114,5 @@ public class LoginActivity extends AppCompatActivity {
         Intent i = new Intent (this, Maintenance.class);
         startActivity(i);
     }
-
-
-
-
 }
 
