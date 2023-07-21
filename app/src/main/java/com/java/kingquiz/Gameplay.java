@@ -2,6 +2,7 @@ package com.java.kingquiz;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -12,6 +13,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.java.kingquiz.database.DatabaseHelper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Gameplay extends AppCompatActivity {
 
@@ -61,11 +67,12 @@ public class Gameplay extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                btn_opcion1.setClickable(true);
+                btn_opcion2.setClickable(true);
+                btn_opcion3.setClickable(true);
+                btn_opcion4.setClickable(true);
+
                 playGame();
-                btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
-                btn_opcion2.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
-                btn_opcion3.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
-                btn_opcion4.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
                 clickcount=clickcount+1;
                 if(clickcount==15)
                 {
@@ -96,8 +103,9 @@ public class Gameplay extends AppCompatActivity {
                 //Arma una cadena con la información cargada en las variables anteriores, y hace un espaciado para el siguiente párrafo
                 stringBuilder.append("¿ ").append(question).append(" ?");
 
+               // gimmeAnswers(questionid);
                 showMeCorrectAnswer(questionid);
-                showMeWrongOptions(questionid);
+              //  showMeWrongOptions(questionid);
                 showIfAnswerIsCorrect(questionid);
             }
         }
@@ -106,7 +114,7 @@ public class Gameplay extends AppCompatActivity {
     }
 
     public void startCountDown(View v) {
-        new CountDownTimer(15000, 1000){
+        new CountDownTimer(300000, 1000){
             public void onTick(long millisUntilFinished){
                 tw_timer.setText(String.valueOf(counter));
                 counter++;
@@ -134,9 +142,11 @@ public class Gameplay extends AppCompatActivity {
 
                     //Arma una cadena con la información cargada en las variables anteriores, y hace un espaciado para el siguiente párrafo
                     stringBuilder.append(iscorrect);
+                    showMeWrongOptions(iscorrect, id);
                 }
             }
             //Carga la información del objeto StringBuilder en el TextView para que sea mostrado en la pantalla
+          //  suffleWrongAnswersRandom(stringBuilder.toString());
             btn_opcion1.setText(stringBuilder.toString());
 
         }
@@ -146,52 +156,125 @@ public class Gameplay extends AppCompatActivity {
 
     }
 
-    public void showMeWrongOptions(String id){
+    public void showMeWrongOptions(String rightAnswer, String id) {
         StringBuilder stringBuilder = new StringBuilder();
         //Aquí creamos un objeto Cursor para cargar la información obtenida de la base de datos
         Cursor cursor = databaseHelper.bringMeWrongAnswers(id);
+        int i = 0;
+     //   String[] intArray = {};
+       // List<String> list = new ArrayList<String>();
+       // list.add(rightAnswer);
 
         if (cursor.getCount() == 0) {
             stringBuilder.append("No hay información registrada.");
         } else {
             while (cursor.moveToNext()) {
                 //Extrae la información obtenida en la consulta y la va cargando en orden en objetos de tipo cadena/texto
-                String respuestaIncorrectas = cursor.getString(0);
+                String respuestaIncorrecta = cursor.getString(0);
+         //       list.add(respuestaIncorrectas);
+           //     Collections.shuffle(list);
+             //   list.toArray(intArray);
 
                 //Arma una cadena con la información cargada en las variables anteriores, y hace un espaciado para el siguiente párrafo
-                stringBuilder.append(respuestaIncorrectas);
-            }
-        }
-        //Carga la información del objeto StringBuilder en el TextView para que sea mostrado en la pantalla
-        btn_opcion2.setText(stringBuilder.toString());
 
-    }
+                if (cursor.getCount() == 3) {
+                    {
+                        if (i == 0) {
+                            btn_opcion2.setText(respuestaIncorrecta);
+                        } else if (i == 1) {
+                            btn_opcion3.setText(respuestaIncorrecta);
+                        } else if (i == 2) {
+                            btn_opcion4.setText(respuestaIncorrecta);
+                        }
+                    }
+                } i++;
+            } //btn_opcion4.setText(rightAnswer);
+
+               /*  if (i == 2) {
+
+                    //btn_opcion4.setText(list.get(3));
+
+                    for (int x = 0; x < list.size(); x++) {
+                        System.out.println(list.get(x));
+                        if (x == 0) {
+                            btn_opcion1.setText(list.get(x));
+                        } else if (x == 1) {
+                            btn_opcion2.setText(list.get(x));
+                        } else if (x == 2) {
+                            btn_opcion3.setText(list.get(x));
+                        } else if (x == 3) {
+                            btn_opcion4.setText(list.get(x));
+                        }
+                    }*/
+
+                }
+        //Carga la información del objeto StringBuilder en el TextView para que sea mostrado en la pantalla
+        // suffleWrongAnswersRandom(stringBuilder.toString());
+
+            }
+
+    public void suffleWrongAnswersRandom(String respuestasIncorrectas){
+        String str = respuestasIncorrectas;
+        String[] firstName = new String[] {Arrays.toString(str.split("(?=[A-Z])"))};
+        List<String> strList = Arrays.asList(firstName);
+
+        String r;
+        Collections.shuffle(strList);
+        for (int i = 0; i < strList.size(); i++) {
+           System.out.println(strList.get(i));
+           if(i==1){
+               btn_opcion1.setText(strList.get(i));
+           }else if(i==2){
+               r=strList.get(i);
+               btn_opcion2.setText(r);
+           }
+           else if(i==0){
+               r=strList.get(i);
+               btn_opcion3.setText(r);
+           }
+           else if(i==4){
+               btn_opcion4.setText(strList.get(i));
+           }
+        }
+
+}
 
     public void showIfAnswerIsCorrect (String id){
         btn_opcion1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String respuestaElegida = btn_opcion1.getText().toString();
-                boolean esCorrecta = databaseHelper.validateAnswer(id);
-                //Cuando se hace click, se llamada este metodo
-                if(esCorrecta){
-                    Toast.makeText(Gameplay.this,"Es correcta!" , Toast.LENGTH_LONG).show();
-                    btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
-                }else{
-                    btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_dark_default_color_error));
+                    String respuestaElegida = btn_opcion1.getText().toString();
+                    StringBuilder stringBuilder = new StringBuilder();
+                    //Aquí creamos un objeto Cursor para cargar la información obtenida de la base de datos
+                    Cursor cursor = databaseHelper.validateAnswer(respuestaElegida,id);
 
+                    if(cursor.getCount() == 2){
+                        Toast.makeText(Gameplay.this,"¡Respuesta correcta!" , Toast.LENGTH_LONG).show();
+                        btn_opcion1.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
+                      //  btn_opcion1.setText("¡Respuesta Correcta!");
+                        //btn_opcion1.setTextColor(Color.WHITE);
+
+                    }else{
+                        Toast.makeText(Gameplay.this,"¡Respuesta Incorrecta!" , Toast.LENGTH_LONG).show();
+                        //btn_opcion1.setTextColor(Color.WHITE);
+                    }
                 }
-            }
         });
 
         btn_opcion2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Cuando se hace click, se llamada este metodo
-                if(btn_opcion2.getText().toString().contains("No hay informacion registrada.")){
+                String respuestaElegida = btn_opcion2.getText().toString();
+                StringBuilder stringBuilder = new StringBuilder();
+                //Aquí creamos un objeto Cursor para cargar la información obtenida de la base de datos
+                Cursor cursor = databaseHelper.validateAnswer(respuestaElegida,id);
+
+                if(cursor.getCount() == 2){
+                    Toast.makeText(Gameplay.this,"¡Respuesta correcta!" , Toast.LENGTH_LONG).show();
                     btn_opcion2.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
                 }else{
-                    btn_opcion2.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_dark_default_color_error));
+                    Toast.makeText(Gameplay.this,"¡Respuesta Incorrecta!" , Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -199,11 +282,17 @@ public class Gameplay extends AppCompatActivity {
         btn_opcion3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Cuando se hace click, se llamada este metodo
-                if(btn_opcion3.getText().toString().contains("No hay informacion registrada.")){
+                String respuestaElegida = btn_opcion2.getText().toString();
+                StringBuilder stringBuilder = new StringBuilder();
+                //Aquí creamos un objeto Cursor para cargar la información obtenida de la base de datos
+                Cursor cursor = databaseHelper.validateAnswer(respuestaElegida,id);
+
+                if(cursor.getCount() == 2){
+                    Toast.makeText(Gameplay.this,"¡Respuesta correcta!" , Toast.LENGTH_LONG).show();
                     btn_opcion3.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
                 }else{
-                    btn_opcion3.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_dark_default_color_error));
+                    Toast.makeText(Gameplay.this,"¡Respuesta Incorrecta!" , Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -211,14 +300,21 @@ public class Gameplay extends AppCompatActivity {
         btn_opcion4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Cuando se hace click, se llamada este metodo
-                if(btn_opcion4.getText().toString().contains("No hay informacion registrada.")){
-                    btn_opcion4.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_default_color_secondary_variant));
+                String respuestaElegida = btn_opcion2.getText().toString();
+                StringBuilder stringBuilder = new StringBuilder();
+                //Aquí creamos un objeto Cursor para cargar la información obtenida de la base de datos
+                Cursor cursor = databaseHelper.validateAnswer(respuestaElegida,id);
+
+                if(cursor.getCount() == 2){
+                    Toast.makeText(Gameplay.this,"¡Respuesta correcta!" , Toast.LENGTH_LONG).show();
+
                 }else{
-                    btn_opcion4.setBackgroundColor(getResources().getColor(com.google.android.material.R.color.design_dark_default_color_error));
+                    Toast.makeText(Gameplay.this,"¡Respuesta Incorrecta!" , Toast.LENGTH_LONG).show();
+
                 }
             }
         });
+
 
     }
 

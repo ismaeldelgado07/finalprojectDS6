@@ -224,7 +224,7 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/btn_playagain"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -232,9 +232,10 @@
                         android:text="Play Again" />
 
                     <TextView
-                        android:id="@+id/textView27"
+                        android:id="@+id/tw_backtomepage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
                         android:gravity="center"
                         android:padding="15dp"
                         android:text="Back to homepage"
